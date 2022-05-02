@@ -1,5 +1,7 @@
 import React from 'react';
 import UserList from './components/User.js'
+import Header from './components/Header.js'
+import Footer from './components/Footer.js'
 import axios from 'axios'
 
 const DOMAIN = 'http://127.0.0.1:8000'
@@ -10,7 +12,12 @@ class App extends React.Component {
   constructor(props) {
       super(props)
       this.state = {
-          'users': []
+        navbarItems: [
+            {name: 'About', href: get_url('/api/')},
+            {name: 'Users', href: '/'},
+            {name: 'Login', href: '/'},
+        ],
+        'users': []
       }
   }
 
@@ -18,8 +25,16 @@ class App extends React.Component {
   render () {
       return (
           <div>
-              <UserList users={this.state.users} />
+                <header>
+                    <Header navbarItems={this.state.navbarItems} />
+                </header>
+                <body>
+                    <UserList users={this.state.users} />   
+                </body>
+                
+                <Footer/>
           </div>
+         
       )
   }
   
