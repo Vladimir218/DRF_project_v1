@@ -20,4 +20,3 @@ class ToDo(models.Model):
     update = models.DateTimeField(auto_now=True)
     creator_user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
     flag_is_active = models.BooleanField(default=True)
-
