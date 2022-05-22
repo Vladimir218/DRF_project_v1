@@ -1,9 +1,10 @@
 import React from 'react'
+import {Link} from "react-router-dom";
 
 function NavbarItem({name, href}) {
     return (
-        <li className="nav-item active">
-          <a className="nav-link" to={href}>{name}</a>
+        <li className="nav-item active" key={name}>
+            <Link className="nav-link" to={href}>{name}</Link>
         </li>
     )
 }
@@ -11,16 +12,15 @@ function NavbarItem({name, href}) {
 
 export default function Header({navbarItems}) {
     return (
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark bg-opacity-25">
-            <div class="text-center container-fluid">
-         
-                <div class="collapse navbar-collapse" id="navbarExample01">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <nav className="navbar navbar-expand-lg navbar-light bg-dark bg-opacity-25">
+            <div className="text-center container-fluid">
+                <div className="collapse navbar-collapse" id="navbarCollapse">
+                    <ul className="navbar-nav mr-auto">
                         {navbarItems.map((item) => <NavbarItem name={item.name} href={item.href} />)}
                     </ul>
                 </div>
             </div>
         </nav>
+        
     )
 }

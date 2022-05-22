@@ -38,11 +38,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "users",
-    "todo",
     'corsheaders',
     'django_filters',
+    "users",
+    "todo",  
 ]
+
+#CORS_ORIGIN_ALLOW_ALL = True
+#CORS_ALLOW_CREDENTIALS = True
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -57,7 +60,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-   "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
 ]
 
 ROOT_URLCONF = "drf_project.urls"

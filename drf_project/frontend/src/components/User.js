@@ -14,8 +14,9 @@ const UserItem = ({user}) => {
 }
 
 const UserList = ({users}) => {
+    
     return (
-        <table class="table">
+        <table className="table">
             <thead>
                 <tr>
                     <th scope="col">User Name</th>
@@ -27,6 +28,7 @@ const UserList = ({users}) => {
             <tbody>
                 {users.map((user) => <UserItem user={user} />)}
             </tbody>
+
         </table>
     )
  }

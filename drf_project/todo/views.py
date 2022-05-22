@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Project,ToDo
-from .serializers import ProjectModelSerializer,ToDoModelSerializer
+from .serializers import ProjectModelSerializer,ToDoModelSerializer, ToDoReadSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework import status
@@ -12,7 +12,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
 
 class ProjectPagination(PageNumberPagination):
-    page_size = 1
+    page_size = 3
 
 
 class ProjectModelViewSet(ModelViewSet):
@@ -38,6 +38,11 @@ class ToDoModelViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['project']
 
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return ToDoReadSerializer
+        return ToDoModelSerializer
+    
     def destroy(self, request, pk=None):
         try:
             instance = self.get_object()
