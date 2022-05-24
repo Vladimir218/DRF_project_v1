@@ -11,6 +11,7 @@ from rest_framework import viewsets
 
 class CustomUserModelViewSet(mixins.ListModelMixin,
                   mixins.RetrieveModelMixin,
+                  mixins.CreateModelMixin,
                   mixins.UpdateModelMixin,
                   viewsets.GenericViewSet):
     queryset = CustomUser.objects.all()
