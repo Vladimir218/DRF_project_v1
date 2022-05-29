@@ -1,4 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
+from rest_framework import permissions
 
 from .models import CustomUser
 from .serializers import CustomUserModelSerializer
@@ -14,6 +15,7 @@ class CustomUserModelViewSet(mixins.ListModelMixin,
                   mixins.CreateModelMixin,
                   mixins.UpdateModelMixin,
                   viewsets.GenericViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserModelSerializer
 

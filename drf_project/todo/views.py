@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework.viewsets import ModelViewSet
-
+from rest_framework import permissions
 from .models import Project,ToDo
 from .serializers import ProjectModelSerializer,ToDoModelSerializer, ToDoReadSerializer
 from rest_framework.pagination import PageNumberPagination
@@ -16,6 +16,7 @@ class ProjectPagination(PageNumberPagination):
 
 
 class ProjectModelViewSet(ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializer
     pagination_class = ProjectPagination
@@ -32,6 +33,7 @@ class ToDoPagination(PageNumberPagination):
 
 
 class ToDoModelViewSet(ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = ToDo.objects.all()
     serializer_class = ToDoModelSerializer
     pagination_class = ToDoPagination

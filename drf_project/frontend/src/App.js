@@ -34,7 +34,7 @@ class App extends React.Component {
     set_token(token) {
         const cookies = new Cookies()
         cookies.set('token', token)
-        this.setState({'token': token})
+        this.setState({'token': token}, ()=>this.load_data())
     }
     
     is_authenticated() {
@@ -49,7 +49,7 @@ class App extends React.Component {
     get_token_from_storage() {
         const cookies = new Cookies()
         const token = cookies.get('token')
-        this.setState({'token': token})
+        this.setState({'token': token}, ()=>this.load_data())
     }
       
 
@@ -116,25 +116,47 @@ class App extends React.Component {
     //      }
     //  )
 
+    get_headers() {
+        let headers = {
+          'Content-Type': 'application/json'
+        }
+      if (this.is_authenticated())
+        {
+            headers['Authorization'] = 'Token ' + this.state.token
+        }
+        return headers
+    }
+
     load_data() {
-        axios.get(get_url('/api/users/'))
+
+        const headers = this.get_headers()
+        axios.get(get_url('/api/users/'), {headers})
             .then(response => {
                 //console.log(response.data.results)
                 this.setState({'users': response.data.results})
-            }).catch(error => console.log(error))
-        axios.get(get_url('/api/projects/'))
+            }).catch(error => {
+                console.log(error)
+                this.setState({users: []})
+            })
+        axios.get(get_url('/api/projects/'), {headers})
             .then(response => {
                 this.setState({'projects': response.data.results})
-            }).catch(error => console.log(error))
-        axios.get(get_url('/api/todos/'))
+            }).catch(error => {
+                console.log(error)
+                this.setState({projects: []})
+            })
+        axios.get(get_url('/api/todos/'), {headers})
             .then(response => {
                 this.setState({'todos': response.data.results})
-            }).catch(error => console.log(error))
+            }).catch(error => {
+                console.log(error)
+                this.setState({todos: []})
+            })
     }
 
     componentDidMount() {
         this.get_token_from_storage()
-        this.load_data()
+       // this.load_data()
     }
 }
 
