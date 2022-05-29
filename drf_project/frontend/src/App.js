@@ -4,6 +4,7 @@ import {ProjectList, ProjectDetail} from './components/Project.js'
 import ToDoList from './components/ToDo.js'
 import Header from './components/Header.js'
 import Footer from './components/Footer.js'
+import LoginForm from './components/Auth.js'
 import axios from 'axios'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
@@ -19,6 +20,7 @@ class App extends React.Component {
                 {name: 'Users', href: '/users'},
                 {name: 'Projects', href: '/projects'},
                 {name: 'ToDos', href: '/todos'},
+                {name: 'Login', href: '/login'},
             ],
             'users': [],
             'projects': [],
@@ -39,6 +41,7 @@ class App extends React.Component {
                         <Route exact path='/users' component={() => <UserList users={this.state.users} />}  />
                         <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects} />}  />
                         <Route exact path='/todos' component={() => <ToDoList items={this.state.todos} />}  />
+                        <Route exact path='/login' component={() => <LoginForm />}  />
                         <Route path="/project/:id" children={<ProjectDetail getProject={(id) => this.getProject(id)} item={this.state.project} />} />
                     </Switch>
    
@@ -57,7 +60,7 @@ class App extends React.Component {
         }).catch(error => console.log(error))
     }
 
-    componentDidMount() {
+   
           //  const users = [
     //      {
     //          'username': 'admin',
@@ -77,8 +80,11 @@ class App extends React.Component {
     //          'users': users
     //      }
     //  )
+
+    load_data() {
         axios.get(get_url('/api/users/'))
             .then(response => {
+                //console.log(response.data.results)
                 this.setState({'users': response.data.results})
             }).catch(error => console.log(error))
         axios.get(get_url('/api/projects/'))
@@ -89,6 +95,10 @@ class App extends React.Component {
             .then(response => {
                 this.setState({'todos': response.data.results})
             }).catch(error => console.log(error))
+    }
+
+    componentDidMount() {
+        this.load_data()
     }
 }
 
