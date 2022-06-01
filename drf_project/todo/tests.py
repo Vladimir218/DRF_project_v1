@@ -15,7 +15,6 @@ class TestProjectViewSet(TestCase):
     def test_get_list(self):
         factory = APIRequestFactory()
         request = factory.get('/api/projects/')
-        print(request)
         admin = CustomUser.objects.create_superuser('admin', 'admin@admin.com', 'admin123456')
         force_authenticate(request, admin)
         view = ProjectModelViewSet.as_view({'get': 'list'})
@@ -37,12 +36,21 @@ class TestProjectViewSet(TestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     
+class TestToDoViewSet(TestCase):   
+
     def test_get_detail(self):
         todo1 = mixer.blend(ToDo)
         client = APIClient()
         admin = CustomUser.objects.create_user('admin', 'admin1@admin.com', 'admin123456')
         client.login(username='admin', password='admin123456')
-       
+
         response = client.get(f'/api/todos/{todo1.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         client.logout()
+    
+class TestProjectTestCase(APITestCase):
+    def test_get_list(self):
+        admin = CustomUser.objects.create_user('admin', 'admin1@admin.com', 'admin123456')
+        self.client.login(username='admin', password='admin123456')
+        response = self.client.get('/api/projects/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
