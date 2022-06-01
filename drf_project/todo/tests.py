@@ -4,7 +4,7 @@ from django.test import TestCase
 import json
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, force_authenticate, APIClient, APISimpleTestCase, APITestCase
-#from mixer.backend.django import mixer
+from mixer.backend.django import mixer
 from users.models import CustomUser
 from .views import ProjectModelViewSet,ToDoModelViewSet
 from .models import Project, ToDo
@@ -15,6 +15,7 @@ class TestProjectViewSet(TestCase):
     def test_get_list(self):
         factory = APIRequestFactory()
         request = factory.get('/api/projects/')
+        print(request)
         admin = CustomUser.objects.create_superuser('admin', 'admin@admin.com', 'admin123456')
         force_authenticate(request, admin)
         view = ProjectModelViewSet.as_view({'get': 'list'})
@@ -23,9 +24,25 @@ class TestProjectViewSet(TestCase):
 
     def test_create_project(self):
         factory = APIRequestFactory()
-        request = factory.post('/api/projects/', {'name': 'Project', 'repository': 'https://github.com/Vladimir218/DRF_project', 'Users': ' 46c00648-6e6f-4d7e-a7af-092d96b90a26, eeb4ab58-b39a-4f39-9704-bf51147ae175 '}, format='json')
+        request = factory.post('/api/projects/', {
+            'name': 'Project', 
+            'repository': 'https://github.com/Vladimir218/DRF_project', 
+            'users': ' 46c00648-6e6f-4d7e-a7af-092d96b90a26'
+            }, format='json')
         #admin = CustomUser.objects.create_superuser('admin', 'admin@admin.com', 'admin123456')
         #force_authenticate(request, admin)
         view = ProjectModelViewSet.as_view({'post': 'create'})
         response = view(request)
+        print(response.status_code)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    
+    def test_get_detail(self):
+        todo1 = mixer.blend(ToDo)
+        client = APIClient()
+        admin = CustomUser.objects.create_user('admin', 'admin1@admin.com', 'admin123456')
+        client.login(username='admin', password='admin123456')
+       
+        response = client.get(f'/api/todos/{todo1.id}/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        client.logout()
