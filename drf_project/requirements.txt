@@ -1,4 +1,5 @@
 altgraph==0.17.2
+aniso8601==7.0.0
 appdirs==1.4.3
 apturl==0.5.2
 attrs==19.3.0
@@ -34,6 +35,10 @@ Faker==12.0.1
 fasteners==0.14.1
 filelock==3.0.12
 future==0.18.2
+graphene==2.1.9
+graphene-django==2.15.0
+graphql-core==2.3.2
+graphql-relay==2.0.1
 httplib2==0.14.0
 idna==3.3
 importlib-metadata==4.11.3
@@ -62,6 +67,7 @@ paramiko==2.6.0
 pbr==5.9.0
 pexpect==4.6.0
 Pillow==8.4.0
+promise==2.3
 protobuf==3.6.1
 pycairo==1.16.2
 pycparser==2.21
@@ -86,8 +92,10 @@ requests-oauthlib==1.3.0
 requests-unixsocket==0.2.0
 ruamel.yaml==0.17.21
 ruamel.yaml.clib==0.2.6
+Rx==1.6.1
 SecretStorage==2.3.1
 simplejson==3.16.0
+singledispatch==3.7.0
 six==1.14.0
 social-auth-app-django==5.0.0
 social-auth-core==4.1.0
@@ -95,6 +103,7 @@ speedtest-cli==2.1.3
 sqlparse==0.4.2
 systemd-python==234
 testresources==2.0.1
+text-unidecode==1.3
 toml==0.10.0
 ubuntu-advantage-tools==27.8
 ubuntu-drivers-common==0.0.0
