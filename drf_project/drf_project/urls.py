@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from rest_framework.routers import DefaultRouter
 
+from graphene_django.views import GraphQLView
+
 from users.views import CustomUserModelViewSet
 from todo.views import ProjectModelViewSet, ToDoModelViewSet
 from rest_framework.authtoken import views
@@ -51,6 +53,7 @@ urlpatterns = [
     #re_path(r'^api/(?P<version>\d\.\d)/users/$', CustomUserModelViewSet.as_view({'get': 'list'})), #UrlPathVersioning
     path("api/", include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token),
+    path("graphql/", GraphQLView.as_view(graphiql=True)),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
