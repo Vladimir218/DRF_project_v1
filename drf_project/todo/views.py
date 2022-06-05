@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
 from .models import Project,ToDo
-from .serializers import ProjectModelSerializer,ToDoModelSerializer, ToDoReadSerializer
+from .serializers import ProjectModelSerializer,ToDoModelSerializer, ToDoReadSerializer,ProjectModelNewSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework import status
@@ -20,6 +20,13 @@ class ProjectModelViewSet(ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializer
     pagination_class = ProjectPagination
+
+    def get_serializer_class(self):
+        if self.request.version == '2.0':
+            return ProjectModelNewSerializer
+        return ProjectModelSerializer
+
+
     def get_queryset(self):
         queryset = Project.objects.all()
         name = self.request.query_params.get('name', '')

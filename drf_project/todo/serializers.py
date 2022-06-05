@@ -12,6 +12,13 @@ class ProjectModelSerializer(ModelSerializer):
         fields = '__all__'
 
 
+class ProjectModelNewSerializer(ModelSerializer):
+        
+    class Meta:
+        model = Project
+        fields = ["name", "users"]
+
+
 class ToDoModelSerializer(ModelSerializer):
     
     creator_user=CustomUserModelSerializer()
