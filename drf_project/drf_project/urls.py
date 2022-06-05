@@ -30,7 +30,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-auth", include("rest_framework.urls")),
     path('/', views.obtain_auth_token),
-    re_path(r'^api/(?P<version>\d\.\d)/users/$', CustomUserModelViewSet.as_view({'get': 'list'})),
+    path('api/users/0.1', include('users.urls', namespace='0.1')), #NamespaceVersioning
+    path('api/users/0.2', include('users.urls', namespace='0.2')), #NamespaceVersioning
+    #re_path(r'^api/(?P<version>\d\.\d)/users/$', CustomUserModelViewSet.as_view({'get': 'list'})), #UrlPathVersioning
     path("api/", include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token),
 ]
