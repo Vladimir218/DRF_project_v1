@@ -2,7 +2,7 @@ import React from 'react'
 import './bootstrap/dist/css/bootstrap.min.css';
 
 
-const ToDoItem = ({item}) => {
+const ToDoItem = ({item, deleteToDo}) => {
    return (
             <tr>
                 <td>{item.id}</td>
@@ -10,11 +10,12 @@ const ToDoItem = ({item}) => {
                 <td>{item.text}</td>
                 <td>{item.create}</td>
                 <td>{item.creator_user}</td>
+                <td><button onClick={()=>deleteToDo(item.id)} type='button'>Delete</button></td>
             </tr>
    )
 }
 
-const ToDoList = ({items}) => {
+const ToDoList = ({items, deleteToDo}) => {
     
     return (
         <table className="table">
@@ -25,10 +26,11 @@ const ToDoList = ({items}) => {
                     <th scope="col">Text</th>
                     <th scope="col">Create</th>
                     <th scope="col">Creator</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                {items.map((item) => <ToDoItem item={item} />)}
+                {items.map((item) => <ToDoItem item={item} deleteToDo={deleteToDo} />)}
             </tbody>
 
         </table>

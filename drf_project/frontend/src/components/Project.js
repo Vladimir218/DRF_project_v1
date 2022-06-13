@@ -2,7 +2,7 @@ import React from 'react'
 import './bootstrap/dist/css/bootstrap.min.css';
 import {Link, useParams} from "react-router-dom";
 
-const ProjectItem = ({project}) => {
+const ProjectItem = ({project, deleteProject}) => {
     let link_to = `/project/${project.id}`
     return (
             <tr>
@@ -10,27 +10,32 @@ const ProjectItem = ({project}) => {
                 <td>{project.name}</td>
                 <td>{project.repository}</td>
                 <td><Link to={link_to}>Detail</Link></td>
+                <td><button onClick={()=>deleteProject(project.id)} type='button'>Delete</button></td>
             </tr>
         )
 }
 
-const ProjectList = ({projects}) => {
+const ProjectList = ({projects, deleteProject}) => {
     
     return (
+        <div>
         <table className="table">
             <thead>
                 <tr>
+                    <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Repository</th>
-                    <th scope="col">Users</th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                {projects.map((project) => <ProjectItem project={project} />)}
+                {projects.map((project) => <ProjectItem project={project} deleteProject={deleteProject}/>)}
             </tbody>
 
         </table>
+        <Link to='/projects/create'>Create</Link>
+        </div>
     )
 }
  
